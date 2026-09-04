@@ -45,7 +45,12 @@ void loop() {
         buttonStates[i] = reading;
 
         if (reading == LOW) {
+          Serial.print("+");
+          Serial.println(i);
           tone(BUZZER_PIN, notes[i]);
+        } else {
+          Serial.print("-");
+          Serial.println(i);
         }
       }
     }
