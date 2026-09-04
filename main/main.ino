@@ -10,7 +10,7 @@ int lastButtonStates[BUTTON_COUNT] = {};
 int notes[BUTTON_COUNT] = {NOTE_B5, NOTE_C6, NOTE_D6, NOTE_E6, NOTE_F6, NOTE_G6, NOTE_A6, NOTE_B6};
 
 unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 0;
+unsigned long debounceDelay = 25;
 
 void setup() {
   pinMode(BUZZER_PIN, OUTPUT);

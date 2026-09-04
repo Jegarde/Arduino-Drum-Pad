@@ -16,24 +16,19 @@ if not is_connected:
 
 arduino = serial.Serial("COM3", 9600)
 
-def send_pad_trigger(note_number, velocity=127):
-    msg_on = mido.Message("note_on", note=note_number, velocity=velocity)
-    outport.send(msg_on)
-
-    msg_off = mido.Message("note_off", note=note_number, velocity=0)
-    outport.send(msg_off)
-
-    print(f"Note {midi_note_number} sent")
+def trigger_button(note, is_pressed, velocity=127):
+    msg = mido.Message("note_on" if is_pressed else "note_off", note=note, velocity=velocity)
+    outport.send(msg)
+    print(f"Note {midi_note_number} {'pressed' if is_pressed else 'released'}")
 
 while True:
     message = arduino.readline().decode().strip()
     if message.startswith("+"):
         button_id = int(message[1:])
         midi_note_number = 36 + button_id
-        send_pad_trigger(midi_note_number, 110)
-        
-    if "+7" in message: break
-
-print("bye!")
-
+        trigger_button(midi_note_number, is_pressed=True, velocity=110)
+    elif message.startswith("-"):
+        button_id = int(message[1:])
+        midi_note_number = 36 + button_id
+        trigger_button(midi_note_number, is_pressed=False, velocity=0)
 
