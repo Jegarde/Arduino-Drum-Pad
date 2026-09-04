@@ -71,7 +71,7 @@ if not outport:
     exit()
 
 root = tk.Tk()
-root.title("Arduino Drum Rack")
+root.title("Arduino Drum Pad")
 buttons = []
 
 for button_id in range(8):
