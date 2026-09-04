@@ -3,14 +3,14 @@
 const int BUZZER_PIN = 10;
 
 const int BUTTON_COUNT = 8;
-int buttonPins[BUTTON_COUNT] = {2, 4, 6, 8, 3, 5, 7, 9};
+int buttonPins[BUTTON_COUNT] = {3, 5, 7, 9, 2, 4, 6, 8};
 int buttonStates[BUTTON_COUNT] = {};
 int lastButtonStates[BUTTON_COUNT] = {};
 
 int notes[BUTTON_COUNT] = {NOTE_B5, NOTE_C6, NOTE_D6, NOTE_E6, NOTE_F6, NOTE_G6, NOTE_A6, NOTE_B6};
 
 unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 25;
+unsigned long debounceDelay = 0;
 
 void setup() {
   pinMode(BUZZER_PIN, OUTPUT);
@@ -47,7 +47,7 @@ void loop() {
         if (reading == LOW) {
           Serial.print("+");  // + prefix means pressed in listener
           Serial.println(i);
-          tone(BUZZER_PIN, notes[i]);
+          //tone(BUZZER_PIN, notes[i]);
         } else {
           Serial.print("-");  // + prefix means released in listener
           Serial.println(i);
@@ -63,6 +63,6 @@ void loop() {
   }
 
   if (anyButtonsPressed == false) {
-    noTone(BUZZER_PIN);
+    //noTone(BUZZER_PIN);
   }
 }
