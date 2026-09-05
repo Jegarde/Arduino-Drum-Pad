@@ -5,6 +5,8 @@ import rtmidi
 from sys import exit
 from tkinter.messagebox import showinfo
 
+# Change if the serial port doesn't match yours :)
+ARDUINO_SERIAL_PORT = "COM3"
 
 def connect_to_loop_midi():
     outport = None
@@ -61,8 +63,14 @@ def close_application():
     arduino.close()
     root.destroy()
 
+try:
+    arduino = serial.Serial(ARDUINO_SERIAL_PORT, 9600, timeout=0.1)
+except serial.SerialException:
+    err_msg = f"Could not connect to Arduino on {ARDUINO_SERIAL_PORT}. Make sure the Arduino is connected and try again. Or change the serial port in the code to match yours!"
+    showinfo("Oof!", err_msg)
+    print(err_msg)
+    exit()
 
-arduino = serial.Serial("COM3", 9600, timeout=0.1)
 outport = connect_to_loop_midi()
 if not outport:
     err_msg = "No MIDI output port found. Create a loopMIDI port named 'arduino' and try again."
